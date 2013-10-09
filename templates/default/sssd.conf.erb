@@ -64,6 +64,12 @@ ldap_search_base = <%= dnbasearr[count-1] %>
 <% if node[:authconfig][:ldap][:dnbind] != '' -%>
 ldap_default_bind_dn = <%= node[:authconfig][:ldap][:dnbind] %>
 <% end -%>
+<% if node[:authconfig][:ldap][:user_search] != '' -%>
+ldap_user_search_base = <%= node[:authconfig][:ldap][:user_search] %>
+<% end -%>
+<% if node[:authconfig][:ldap][:group_search] != '' -%>
+ldap_group_search_base = <%= node[:authconfig][:ldap][:group_search] %>
+<% end -%>
 <% if node[:authconfig][:ldap][:rfc2307bis] -%>
 ldap_schema = rfc2307bis
 <% else -%>
@@ -112,7 +118,7 @@ ldap_tls_reqcert = never
 ldap_auth_disable_tls_never_use_in_production = true
 <% end -%>
 <% if node[:authconfig][:ldap][:bindpw] != '' -%>
-ldap_default_authtok_type = password
+ldap_default_authtok_type = <%= node[:authconfig][:ldap][:authtok_type] %>
 ldap_default_authtok = <%= node[:authconfig][:ldap][:bindpw] %>
 <% end -%>
 
@@ -130,5 +136,13 @@ ldap_group_member = msSFU30PosixMember
 
 <% else -%>
 ldap_group_member = uniqueMember
+<% end -%>
+<% if !node[:authconfig][:access_provider].nil? -%>
+access_provider = <%= node[:authconfig][:access_provider][:type] %>
+<% if node[:authconfig][:access_provider][:groups] != '' -%>
+simple_allow_groups = <%= node[:authconfig][:access_provider][:groups] %>
+<% elsif node[:authconfig][:access_provider][:users] != '' -%>
+simple_allow_users = <%= node[:authconfig][:access_provider][:users] %>
+<% end -%>
 <% end -%>
 <% end -%>
