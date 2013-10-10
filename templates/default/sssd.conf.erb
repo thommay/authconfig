@@ -123,7 +123,6 @@ ldap_default_authtok = <%= node[:authconfig][:ldap][:bindpw] %>
 <% end -%>
 
 <% if node[:authconfig][:ldap][:server_is_ad] -%>
-min_id = 700
 ldap_user_principal = userPrincipalName
 ldap_user_fullname = displayName
 ldap_user_name = sAMAccountName
