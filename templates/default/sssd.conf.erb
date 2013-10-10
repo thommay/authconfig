@@ -140,9 +140,9 @@ ldap_group_member = uniqueMember
 <% if !node[:authconfig][:access_provider].nil? -%>
 access_provider = <%= node[:authconfig][:access_provider][:type] %>
 <% if node[:authconfig][:access_provider][:groups] != '' -%>
-simple_allow_groups = <%= node[:authconfig][:access_provider][:groups] %>
+simple_allow_groups = <%= node[:authconfig][:access_provider][:allow_groups] %>
 <% elsif node[:authconfig][:access_provider][:users] != '' -%>
-simple_allow_users = <%= node[:authconfig][:access_provider][:users] %>
+simple_allow_users = <%= node[:authconfig][:access_provider][:allow_users] %>
 <% end -%>
 <% end -%>
 <% end -%>
